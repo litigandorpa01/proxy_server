@@ -1,2 +1,154 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - proxy_network
+
+  tor_1:
+    image: dperson/torproxy
+    container_name: tor_1
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  # Hash generado
+    ports:
+      - "9050:9050"
+      - "9051:9051"
+    networks:
+      - proxy_network
+
+  tor_2:
+    image: dperson/torproxy
+    container_name: tor_2
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9052:9050"
+      - "9053:9051"  
+    networks:
+      - proxy_network
+
+  tor_3:
+    image: dperson/torproxy
+    container_name: tor_3
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9054:9050"
+      - "9055:9051"
+    networks:
+      - proxy_network
+
+  tor_4:
+    image: dperson/torproxy
+    container_name: tor_4
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9056:9050"
+      - "9057:9051"
+    networks:
+      - proxy_network
+
+  tor_5:
+    image: dperson/torproxy
+    container_name: tor_5
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9058:9050"
+      - "9059:9051"
+    networks:
+      - proxy_network
+
+  tor_6:
+    image: dperson/torproxy
+    container_name: tor_6
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9060:9050"
+      - "9061:9051"
+    networks:
+      - proxy_network
+
+  tor_7:
+    image: dperson/torproxy
+    container_name: tor_7
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9062:9050"
+      - "9063:9051"
+    networks:
+      - proxy_network
+
+  tor_8:
+    image: dperson/torproxy
+    container_name: tor_8
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9064:9050"
+      - "9065:9051"
+    networks:
+      - proxy_network
+  
+  tor_9:
+    image: dperson/torproxy
+    container_name: tor_9
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9066:9050"
+      - "9067:9051"
+    networks:
+      - proxy_network
+  
+  tor_10:
+    image: dperson/torproxy
+    container_name: tor_10
+    environment:
+      - TOR_ControlPort=0.0.0.0:9051
+      - TOR_HashedControlPassword=16:5459314A365445686094C81B7EADFC19384710CD4C50B02AC17B5E7FF6  
+    ports:
+      - "9068:9050"
+      - "9069:9051"
+    networks:
+      - proxy_network
+
+  ms_proxies:
+    build: ./ms_proxies
+    container_name: ms_proxies
+    ports:
+      - "6100:80"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro 
+      - /etc/timezone:/etc/timezone:ro   
+    depends_on:
+      - mongo
+    networks:
+      - proxy_network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  proxy_network:
+    name: proxy_network 
+    driver: bridge
 
 
